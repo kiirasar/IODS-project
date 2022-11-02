@@ -5,13 +5,26 @@ date: "2022-11-02"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+# To launch you code to GitHub
+
+# 1. Save your latest version from Rstudio
+# 2. Press Git (next to Environment, History, Connections, Git)
+# 3. Choose the .Rmd file you want to upload (tick it)
+# 4. Press "Commit" below the task bar e.g., "chapter1" choose the one with blue M
+# 5. Write a commit message (what you have changed)
+# 6. Press commit
+# 7. Remeber to press "Push" at the end
+# 8. Go check that everything has been updated to your GitHub.
+
+# Below some automatic tips to work with R Markdown.
 
 ## R Markdown
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
