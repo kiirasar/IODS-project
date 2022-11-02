@@ -12,3 +12,31 @@ date()
 The text continues here.
 
 # Hi my name is Kiira.
+
+```{r}
+# This is a so-called "R chunk" where you can write R code.
+
+date()
+
+```
+
+# **How are you feeling right now?** 
+#  I am excited about the course. It is a bit intimitating, 
+#  since it seeems that there is quite a lot of work. 
+#  But, I cant wait to be able to apply my knowledge that
+#  I will learn here to my own research.  
+
+# **What do you expect to learn?** 
+#  I am a PhD student and I found the course content very 
+#  fitting for my needs. I am the most excited to learn more #  about GitHub and R Markdown. Also, 2 model validation, 
+#  4 clustering/classification, and dimensionality reduction
+#  techniques are very interesting topics. I am doing my
+#  PhD on psychometric validation of Warwick-Edinburgh 
+#  Mental Well-being Scale. 
+
+# **Where did you hear about the course?**
+#  I remember taking one of the Kimmo's course almost 10 
+#  years ago, when I was an undergraduate. Even though the 
+#  course at the time was held in very early mornigns, I 
+#  really enjoyed his class. When I noticed (in Sisu) that 
+#  he is holding an online course, I signed up immediately.
