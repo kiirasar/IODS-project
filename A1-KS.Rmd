@@ -1,0 +1,126 @@
+---
+title: "Assignment 1"
+author: "Kiira Sarasjaervi"
+date: "2022-11-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Assignment 1: Tasks and Instructions
+
+**p = Maximum points for completing the tasks (will be needed in the review phase)**
+
+## 1. Getting started **(5p)**
+
+1. Check that you have everything installed and created according to the instructions. You should have 
+  - a GitHub repository: **https://github.com/kiirasar/IODS-project**
+  - a course diary web page (also on GitHub, in a different address): **https://kiirasar.github.io/IODS-project**
+  - the IODS-project started on RStudio using the course templates:
+  
+**(5 p)**
+
+## 2. Chapter1.Rmd **(5p)**
+2. Open the file **chapter1.Rmd** located in your IODS-project folder with RStudio. Just write some of your thoughts about this course freely in the file, e.g., 
+
+- How are you feeling right now? 
+- What do you expect to learn? 
+- Where did you hear about the course?
+
+Also reflect on your learning experiences with the R for **Health Data Science book** and the **Exercise Set 1**: 
+
+- How did it work as a "crash course" on modern R tools and using RStudio? 
+- Which were your favorite topics? 
+- Which topics were most difficult? 
+
+Some other comments on the book and our new approach of getting started with R Markdown etc.? (All this is just "warmup" to get well started and learn also the technical steps needed each week in Moodle, that is, submit and review. We will start more serious work next week! You can already look at the next topic in Moodle and begin working with the Exercise Set 2...)
+
+Also add in the file a link to your GitHub repository (that you created earlier):
+https://github.com/your_github_username/IODS-project
+
+**KS ANSWER: https://github.com/kiirasar/IODS-project**
+
+You can immediately start to learn the basics of the **R Markdown** syntax that we will use for writing the exercise reports: Try, for example, highlighting parts of your text, adding some headers, lists, links etc. 
+
+**Hint**: Use the R Markdown Reference Guide or cheatsheet (both found from the RStudio Help). This is an excellent quick (1 min) tour of R Markdown, please watch it: https://rmarkdown.rstudio.com/lesson-1.html
+
+Remember to save your chapter1.Rmd file. **(5 p)**
+
+------ **Chapeter 1.Rmd - copied** -------
+The text is copied here:
+```{r}
+# This is a so-called "R chunk" where you can write R code.
+
+date()
+
+```
+
+**How are you feeling right now?** 
+
+I am excited about the course. It is a bit intimitating, since it seeems that there is quite a lot of work. But, I cant wait to be able to apply my knowledge that I will learn here to my own research.  
+
+**What do you expect to learn?** 
+
+I am a PhD student and I found the course content very fitting for my needs. I am the most excited to learn more about GitHub and R Markdown. Also, the second class regarding 2 model validation, 4 clustering/classification, and dimensionality reduction techniques are very interesting topics. I am doing my PhD on psychometric validation of (Short) Warwick-Edinburgh Mental Well-being Scale.  
+
+
+**Where did you hear about the course?**
+
+I remember taking one of the Kimmo's course almost 10 years ago, when I was an undergraduate. Even though the course at the time was held in very early mornigns, I really enjoyed his class. When I noticed (in Sisu) that he is holding an online course, I signed up immediately.
+
+
+## 3. index.Rmd **(5p)**
+
+Open the **index.Rmd** file with RStudio. 
+
+At the beginning of the file, in the YAML options below the 'title' option, add the following option: author: "Your Name". Save the file and "knit" the document (there's a button for that) as an HTML page. This will also update the index.html file. **(5 p)**
+
+**index.Rmd error code**
+
+Error in yaml::yaml.load(..., eval.expr = TRUE) : 
+  Parser error: while parsing a block mapping at line 1, column 1 did not find expected key at line 3, column 3
+Calls: <Anonymous> ... parse_yaml_front_matter -> yaml_load -> <Anonymous>
+Execution halted
+
+## 4. Upload changes to GitHub **(5p)**
+Upload the changes to GitHub (the version control platform) from RStudio. There are a few phases (don't worry: all this will become an easy routine for you very soon!):
+
+- First, select the **"Git"** tab in the upper right corner of RStudio. You will see a list of modified files.
+- Select **"Commit"**. 
+- It will open a new **"Review Changes"** window showing more detailed information of the changes you have made in each file since the previous version.
+- **Tick the box in the front of each file** (be patient, it takes some time for the check to appear).
+- **Write a small commit message** (there's a box for that) that describes your changes briefly. 
+-After this task is completed (not yet), both the changes and the message will be seen on **GitHub**. 
+
+**Note**: It is useful to make commits often and even on small changes.  
+Commits are at the heart of the version control system, as a single commit represents a single version of the file.)  
+
+- **Press "Commit".**(RStudio uses Git to implement the changes included in the commit.)
+- **Press "Push".** (RStudio uses Git to upload the changes to your GitHub repository.)
+- Now you can **close the "Review Changes"** window of RStudio. Good job!! 
+
+**(5 p)**
+
+## 5. Check GitHub and Submit Your Assignment
+
+After a few moments, go to your **GitHub repository** at
+https://github.com/your_github_username/IODS-project
+to see what has changed (please be patient and refresh the page).
+
+- **https://github.com/kiirasar/IODS-project**
+
+Also visit your **course diary** that has been automatically been updated at
+https://your_github_username.github.io/IODS-project
+and make sure you see the changes there as well.
+
+- **https://kiirasar.github.io/IODS-project**
+
+After completing the tasks above you are ready to **submit your Assignment** for the review (using the Moodle Workshop below). Have the two links (**your GitHub repository and your course diary**) ready!  
+Remember to get back there when the Review phase begins (see course schedule).
+
+- **https://github.com/kiirasar/IODS-project**
+- **https://kiirasar.github.io/IODS-project**
+
+Have fun and don't be afraid to ask for help using the Moodle discussion forum.
