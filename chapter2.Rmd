@@ -1,4 +1,4 @@
-# Insert chapter 2 title here
+# Assignment 2: Tasks and Instructions
 
 *Describe the work you have done this week and summarize your learning.*
 
@@ -11,3 +11,34 @@ date()
 ```
 
 Here we go again...
+
+### **1. Read and describe the data (0-2 points)**
+
+Read the students2014 data into R. **Explore** the structure and the dimensions of the data and **describe** the dataset briefly, assuming the reader has no previous knowledge of it.     
+**(0-2 points)**
+
+
+### **2. Graphical overview of the data (0-3 points)**
+
+**Show a graphical overview** of the data and **show summaries of the variables** in the data. **Describe** and **interpret** the outputs, commenting on the distributions of the variables and the relationships between them.   
+  **(0-3 points)**
+
+
+### **3. Regression model - outcome variable (0-4 points)**
+
+Choose **three** variables as explanatory variables and fit a regression model where exam points is the target (dependent, outcome) variable. **Show a summary** of the fitted model and comment and **interpret the results**. Explain and interpret the statistical test related to the model parameters. 
+
+If an explanatory variable in your model **does not** have a statistically significant relationship with the target variable, remove the variable from the model and fit the model again without it.   
+  **(0-4 points)**
+
+### **4. Interpret the model parameters and R-square (0-3 points)**
+
+Using a **summary** of your fitted model, explain the relationship between the chosen explanatory variables and the target variable (**interpret the model parameters**). Explain and **interpret** the multiple **R-squared** of the model.   
+  **(0-3 points)**
+
+### **5. Plots (0-3 points)**
+
+Produce the following diagnostic plots: **Residuals vs Fitted values, Normal QQ-plot** and **Residuals vs Leverage**.
+**Explain** the assumptions of the model and **interpret the validity** of those assumptions based on the diagnostic plots.   
+  **(0-3 points)**
+

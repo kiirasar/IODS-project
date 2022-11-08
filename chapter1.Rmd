@@ -11,9 +11,11 @@ date()
 ```
 The text continues here.
 
+- **NOTE.** <span style="color: red;">This is updated version from previous Assignment (added Personal Access Token, PAT)</span>
+
 # Assignment 1: Tasks and Instructions
 
-## 1. Getting started **(5p)**
+## 1. Getting started **(3p)**
 
 1. Check that you have everything installed and created according to the instructions. You should have 
   - a GitHub repository: **https://github.com/kiirasar/IODS-project**
@@ -92,17 +94,14 @@ https://github.com/your_github_username/IODS-project
 
 - My GitHub repository: **https://github.com/kiirasar/IODS-project**
 
-Remember to save your chapter1.Rmd file. **(5 p)**
+Remember to save your chapter1.Rmd file.
 
-## 3. index.Rmd **(5p)**
+## 3. index.Rmd **(2p)**
 
 Open the **index.Rmd** file with RStudio. 
 
 At the beginning of the file, in the YAML options below the 'title' option, add the following option: author: "Your Name". Save the file and "knit" the document (there's a button for that) as an HTML page. This will also update the index.html file. 
 
-
-
-**(5 p)**
 
 **index.Rmd error code**
 
@@ -111,7 +110,44 @@ At the beginning of the file, in the YAML options below the 'title' option, add 
 Calls: <Anonymous> ... parse_yaml_front_matter -> yaml_load -> <Anonymous>
 Execution halted</span>
 
-## 4. Upload changes to GitHub **(5p)**
+## <span style="color: red;"> 4.(This point added on Mon 7 Nov 2022)</span> Create a **Personal Access Token (PAT)** **(5 p)**
+
+To make the connection between RStudio and GitHub as smooth as possible, you should create a **Personal Access Token (PAT)**.
+
+The shortest way to proceed is to follow the steps below. (Source: https://happygitwithr.com/https-pat.html)
+
+Execute the R commands (preceded by '> ') in the RStudio **Console** (below the Editor):
+
+**> install.packages("usethis")**
+**> usethis::create_github_token()**
+
+GitHub website will open in your browser. Log in with your GitHub credentials.
+
+- Write a Note in the box, for example **"IODS Project"**.
+- Select an **Expiration** time for your PAT, e.g., 50 days.
+- The pre-selected **scopes** "repo", "workflow", "gist", and "user" are OK.
+- Press <mark style="background-color: green">**"Generate token"**</mark> and
+- **copy the generated PAT to your clipboard**.
+
+![](Kuva3.png)
+
+
+![](Kuva4.png)
+
+Return to RStudio and continue in the **Console**:
+
+**> gitcreds::gitcreds_set()**
+
+- WAIT until a prompt "Enter password or token:" appears.
+- **Paste** your PAT to the prompt and **press Enter**.
+
+Apparently, I already had **PAT**, but I decided to update it, so I could finish this assignment.
+
+![](Kuva5.png)
+
+Now you should be able to work with GitHub, i.e., push and pull from RStudio.
+
+## 5. Upload changes to GitHub **(5p)**
 Upload the changes to GitHub (the version control platform) from RStudio. There are a few phases (don't worry: all this will become an easy routine for you very soon!):
 
 - First, select the **"Git"** tab in the upper right corner of RStudio. You will see a list of modified files.
@@ -127,8 +163,6 @@ Commits are at the heart of the version control system, as a single commit repre
 - **Press "Commit".**(RStudio uses Git to implement the changes included in the commit.)
 - **Press "Push".** (RStudio uses Git to upload the changes to your GitHub repository.)
 - Now you can **close the "Review Changes"** window of RStudio. Good job!! 
-
-**(5 p)**
 
  ![](Kuva1.png) 
 
