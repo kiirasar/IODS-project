@@ -1,0 +1,54 @@
+---
+title: "Assignment 2"
+author: "Kiira Sarasjaervi"
+date: "2022-11-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Assignment 2: Tasks and Instructions
+
+### General instructions
+Complete the **Exercise Set 2** to go through various R tricks and to obtain the R code needed in the Assignment.
+
+From now on, the Assignments consist of   
+
+**1) Data wrangling exercises**   
+**2) Analysis exercises.**   
+
+Remember that your work should appear on **GitHub**. You should update your GitHub all the time between your work sessions.  Remember that to update your **course diary**, you need to **“knit” your index.Rmd file** into an **index.html document**. Also of course, you always need to push your changes to GitHub.
+
+### Data wrangling (max 5 points)
+
+**1. Create a 'data' folder and R script** <mark >DONE</mark>
+
+During the data wrangling exercises you will pre-process a data set for further analysis. To complete the data wrangling part, you only need to **produce an R script, no output in your course diary is needed**.  
+
+Use **code comments** to make your code easier to read. We recommend using RStudio for writing R code.
+
+- Create a folder named **‘data’** in your IODS-project folder. <mark >DONE</mark>
+- Create a **new R script with RStudio**. <mark >DONE</mark>
+- Write your **name, date and a one sentence file description as a comment on the top of the script file.** <mark >DONE</mark>
+- **Save the script** for example as 'create_learning2014.R' in the **‘data’ folder**. <mark >DONE</mark>
+- Complete the rest of the steps in that script.
+
+**2. Read the data into R (1 point)** <mark >DONE</mark>
+
+Read the full **learning2014 data** from http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt into R (the separator is a tab ("\t") and the file includes a header) and explore the structure and dimensions of the data. Write short code comments describing the output of these explorations.
+
+**3.  Create analysis dataset (1 point)**
+
+- Create an analysis dataset with the variables **gender, age, attitude, deep, stra, surf** and **points** by combining questions in the learning2014 data, as defined in the **Exercise Set** and also on the bottom part of the following page (only the top part of the page is in Finnish). http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS2-meta.txt. 
+- **Scale** all combination variables to the original scales (**by taking the mean**).  
+- **Exclude** observations where the exam points variable is **zero**. (The data should then have **166 observations and 7 variables**)  
+
+**4. Set working directory (3 points)**
+
+- Set the working directory of your R session to the **IODS Project folder** (study how to do this with RStudio).  
+**Save** the analysis dataset to the **‘data’ folder**, using for example **write_csv() function** (readr package, part of tidyverse).  
+- You can name the data set for example as **learning2014.csv.** See **?write_csv** for help or search the web for pointers and examples.  
+- **Demonstrate that you can also read the data again by using **read_csv()**. (Use `str()` and `head()` to make sure that the structure of the data is correct).  
+
