@@ -131,9 +131,6 @@ GitHub website will open in your browser. Log in with your GitHub credentials.
 
 ![](Kuva3.png)
 
-
-![](Kuva4.png)
-
 Return to RStudio and continue in the **Console**:
 
 **> gitcreds::gitcreds_set()**
@@ -142,9 +139,6 @@ Return to RStudio and continue in the **Console**:
 - **Paste** your PAT to the prompt and **press Enter**.
 
 Apparently, I already had **PAT**, but I decided to update it, so I could finish this assignment.
-
-![](Kuva5.png)
-
 Now you should be able to work with GitHub, i.e., push and pull from RStudio.
 
 ## 5. Upload changes to GitHub **(5p)**
