@@ -24,7 +24,7 @@ Figure demonstrates how to create a new folder.
 ![](Kuva6.png)
 
 
-Please see **create_learning2014.R** and **lrn14_KS.csv** to evaluate the Data wrangling from my a GitHub repository: **https://github.com/kiirasar/IODS-project**
+Please see **create_learning2014.R** and **lrn14_KS.csv** to evaluate the Data wrangling from my a GitHub repository: **https://github.com/kiirasar/IODS-project** you can find the files in **data** folder.
 
 
 ## Analysis **(max 15 points)**
