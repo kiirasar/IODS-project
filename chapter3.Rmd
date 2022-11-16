@@ -1,0 +1,16 @@
+---
+title: "chapter3"
+author: "kiirasar"
+date: "2022-11-16"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Assignment 3: Tasks and Instructions
+
+## 1. Data wrangling **(max 5 points)**
+
+Please see **create_alc.R** to evaluate the Data wrangling from my a GitHub repository: **https://github.com/kiirasar/IODS-project** you can find the files in **data** folder.
