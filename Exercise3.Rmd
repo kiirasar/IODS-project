@@ -179,12 +179,12 @@ if(condition) {
 # Click the green arrow ("Run Current Chunk") in the upper-right corner of this chunk. This will initialize the R objects needed in the exercise. Then move to Instructions of the exercise to start working.
 
 library(dplyr)
-math <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/Helsinki-Open-Data-Science/master/datasets/student-mat.csv", sep=";", header=TRUE)
-por <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/Helsinki-Open-Data-Science/master/datasets/student-por.csv", sep=";", header=TRUE)
+mat <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/Helsinki-Open-Data-Science/master/datasets/student-mat.csv", sep=";", header=TRUE)
+port <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/Helsinki-Open-Data-Science/master/datasets/student-por.csv", sep=";", header=TRUE)
 
 free_cols <- c("failures","paid","absences","G1","G2","G3")
-join_cols <- setdiff(colnames(por), free_cols)
-mat_por <- inner_join(math, por, by = join_cols, suffix = c(".math", ".por"))
+join_cols <- setdiff(colnames(port), free_cols)
+mat_port <- inner_join(mat, port, by = join_cols, suffix = c(".math", ".por"))
 
 dim(mat_por)
 # 370 rows/observations/participants. These only include the students who participated both math and portugese studies.
@@ -212,11 +212,11 @@ Hint:
 
 # print out the column names of 'math_por'
 
-colnames(mat_por)
+colnames(mat_port)
 
 # create a new data frame with only the joined columns
-alc <- select(math_por, all_of("change me"))
-alc <- select(mat_por, all_of(join_cols))
+alc <- select(mat_port, all_of("change me"))
+alc <- select(mat_port, all_of(join_cols))
 View(alc)
 
 # print out the columns not used for joining (those that varied in the two data sets)
@@ -243,7 +243,7 @@ for(col_name in free_cols) {
 
 # glimpse at the new combined data
 
-View(alc)
+glimpse(alc)
 
 ```
 
@@ -362,6 +362,7 @@ library(tidyr); library(dplyr); library(ggplot2)
 
 # glimpse at the alc data
 
+glimpse(alc)
 
 # use gather() to gather columns into key-value pairs and then glimpse() at the resulting data
 gather(alc) %>% glimpse
@@ -370,8 +371,8 @@ gather(alc) %>% glimpse
 gather(alc) %>% View
 
 # draw a bar plot of each variable
-gather(alc) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free")
-
+gather(alc) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + 
+  geom_bar()
 
 ```
 
@@ -514,9 +515,12 @@ m <- glm(high_use ~ failures + absences, data = alc, family = "binomial")
 
 # print out a summary of the model
 
+print(m)
 
 # print out the coefficients of the model
 
+OR <- coef(m) %>% exp
+OR
 
 ```
 
@@ -565,6 +569,7 @@ OR <- coef(m) %>% exp
 
 # compute confidence intervals (CI)
 
+CI <- confint(m)
 
 # print out the odds ratios with their confidence intervals
 cbind(OR, CI)
@@ -654,6 +659,7 @@ alc <- mutate(alc, prediction = probability > 0.5)
 - Initialize the ggplot object and define `probability` as the x axis and `high_use` as the y axis.
 - Use `geom_point()` to draw the plot.
 - Add the aesthetic element `col = prediction` and draw the plot again.
+
 - Use `table()` to create a cross table of 'high_use' versus 'prediction'
 - Adjust the code: Use `%>%` to apply the `prop.table()` function on the output of `table()`
 - Adjust the code: Use `%>%` to apply the `addmargins()` function on the output of `prop.table()`
