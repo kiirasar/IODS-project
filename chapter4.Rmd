@@ -5,15 +5,14 @@ date: "2022-11-23"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+#```{r setup, include=FALSE}
+#knitr::opts_chunk$set(echo = TRUE)
+#```
 
 ```{r}
 date()
 ```
 
-----------------------------------------------------------------------------------
 
 # Assignment 4: Tasks and Instructions
 
@@ -33,23 +32,25 @@ library(GGally)
 library(plotly)
 ```
 
------------------------------------------------------------------------------------------------------
+
 
 ### 1. Create a new R Markdown 
 
 Create a new R Markdown file chapter4.Rmd and include it as a child file in your ‘index.Rmd’ file.
 
------------------------------------------------------
+
 
 ### 2. Boston data **(0-1 points)**
 
 Load **Boston data** from **MASS package**. Explore **structure**, **dimensions** and **describe** the dataset briefly. **(0-1 points)**
 
 ```{r}
+
 library(MASS)
 data("Boston") #download the Boston data
 dim(Boston) #dimensions
 str(Boston) #structure
+
 ```
 
 **Interpretation of the results**
@@ -76,7 +77,7 @@ Boston dataset has 506 rows (participants/data points)and 14 columns (variables)
 All the variables are numeric, but some might be ordinal scaling rather than interval or absolute scaling. 
 More detailed description of the dataset can be found [here](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/Boston.html)
 
-------------------------------------------------------
+
 
 ### 3. Graphical overview and variable summaries.**(0-2 points)**
 
@@ -142,7 +143,7 @@ Whereas, for **rm** is normally distributed:
 
 25% and 75% are close to min and max and mean is located somewhere in the middle. One way to get rid of the issue on non-linearity is to standardize our data, so it will become "normally distributed". 
 
------------------------------------------------------
+
 
 ### 4. Standardize Boston dataset **(0-2 points)**
 
@@ -215,7 +216,7 @@ glimpse(test_4) #sanity-check: no crime, rows = 102, columns 13
 glimpse(train_4) #sanity-check: crime, rows = 404, columns 14
 ```
 
-----------------------------------------------------
+
 
 ### 5. Linear discriminant analysis (LDA) **(0-3 points)**
 
@@ -268,7 +269,7 @@ lda.arrows_train(lda.fit_train, myscale = 1)
 
 Similar to the coefficients of linear discriminants values in previous table, **rad** (index of accessibility to radial highways) seem to have most impact of differianting the clusters. Based on the plot, the coefficient, and group mean **rad** values seem to be different between **high crime rate** and other categories. This means that the rad has most impact when differentiating the clusters. Moreover, having access in radial highways seem to be most associated with high criminal rate.  
 
-----------------------------------------------------
+
 
 ### 6. Predict LDA model **(0-3 points)**
 
@@ -298,7 +299,7 @@ Overall, the using test data we manage to predict correct 68 values (67%).
 - **med_low** values were predicted correct (med_low - med_low) 15 (60%) and 32% as high (med_low - med_high).
 - **low** values were predicted correcr (low - low) 10 (48%) and 43% as med_low (med_low - low).
 
-----------------------------------------------------
+
 
 ### 7. K-means **(0-4 points)**
 
@@ -421,7 +422,6 @@ pairs(boston_scl[5:10], col = km_4$cluster) #4 clusters: red, black, green and b
 
 Therefore, maybe model with 2-3 clusters are the most optimal to describe the data.
 
-------------------------------------------------------
 
 ### **Bonus:** to compensate any loss of points from the above exercises **(0-2 points)**
 
@@ -551,7 +551,7 @@ Here is the code in <span style="color: blue;">**blue**
 
 **zn** (proportion of residential land zoned for lots over 25,000 sq.ft.) seem to be the most influential linear separators between the clusters, followd by age, crime, tax and nox.
 
-------------------------------------------------------
+
 
 ### **Super-Bonus:** Plotly() 3D plot **(0-3 points)** (to compensate any loss of points from the above exercises)
 
@@ -632,7 +632,7 @@ plot_ly(x = matrix_product_sb$LD1, y = matrix_product_sb$LD2, z = matrix_product
 
 Unsure, why it is not working. Any suggestions?
 
-------------------------------------------------------
+
 
 ## 2. Data wrangling  **(max 5 points)**
 This code is for the next week’s data! 
@@ -640,5 +640,5 @@ This code is for the next week’s data!
 See [create_human.R](https://github.com/kiirasar/IODS-project/tree/master/data) and **human.csv**
 
 
-----------------------------------------------------------------------
+
 End of assignment 4
