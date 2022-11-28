@@ -502,6 +502,7 @@ cv_a3$delta[1] #0.2108108
 - Perform cross-validation to compare the performance of different logistic regression models (= different sets of predictors). 
 - Start with a very high number of predictors and explore the changes in the training and testing errors as you move to models with less predictors. 
 - Draw a graph displaying the trends of both training and testing errors by the number of predictors in the model. 
+  - <span style="color: red;"> **Comment added later**: x-axis should have number of variables used, y-axis two lines (trainig and testing error)</span>
 
 **Variables:**
 
@@ -548,6 +549,7 @@ loss_func <- function(class, prob) {
 ```
 
 ```{r}
+set.seed(2367)
 cv_e1_test <- cv.glm(data = alc_a3, cost = loss_func, glmfit = m_e1, K = nrow(alc_a3))
 cv_e1_test$delta[1]
 cv_e1 <- cv.glm(data = alc_a3, cost = loss_func, glmfit = m_e1, K = 10)
@@ -564,6 +566,8 @@ cv_e3 <- cv.glm(data = alc_a3, cost = loss_func, glmfit = m_e3, K = 10)
 cv_e3$delta[1]
 
 ```
+
+<span style="color: red;"> **Comment added later:** set.seed(2367) is a random number that is used each time to generate the cv values. This means we should get the same values everytime now, without it the cv-values differ each time, since it re-generates them each time. We need this since cv.glm() has a random generator build in the function.</span>
 
 ```{r}
 
@@ -603,6 +607,7 @@ ggplot(superbonus1, aes(x = x, y = deltas, color = group_e1, group = group_e1)) 
 
 Unsure if this is the correct one. I found this [link](https://rstudio-pubs-static.s3.amazonaws.com/224739_0b86cafbb6d5421ab92c9dc1dd982690.html) that I found useful. 
 
+**NOTE.** <span style="color: red;"> I am not very confident that I got this right, nor I even understood the task correct. I need to go through others assignments and see if I can find solution there.</span>
 
 -----------------------------------------------------------
 End of assignment 3.

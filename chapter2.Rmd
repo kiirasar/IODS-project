@@ -276,6 +276,9 @@ ggplot(std14) +
 ```{r}
 ggpairs(std14, mapping = aes(), lower = list(combo = wrap("facethist", bins = 20)))
 
+#p <- ggpairs(learning2014, mapping = aes(col=gender,alpha=0.3), lower = list(combo = wrap("facethist", bins = 20)))
+# This draws two distributions etc for both male and female participants separately. 
+
 ```
 
 
