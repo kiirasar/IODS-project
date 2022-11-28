@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 date()
 ```
+
 ----------------------------------------------------------------------------------
 
 # Assignment 4: Tasks and Instructions
@@ -22,7 +23,6 @@ First we install/use R packages we need to complete the assignment.
 
 ```{r}
 #install.packages('ggplot2')
-
 library(ggplot2)
 library(vtable)
 library(MASS)
@@ -35,7 +35,6 @@ library(plotly)
 
 -----------------------------------------------------------------------------------------------------
 
-
 ### 1. Create a new R Markdown 
 
 Create a new R Markdown file chapter4.Rmd and include it as a child file in your ‘index.Rmd’ file.
@@ -47,6 +46,7 @@ Create a new R Markdown file chapter4.Rmd and include it as a child file in your
 Load **Boston data** from **MASS package**. Explore **structure**, **dimensions** and **describe** the dataset briefly. **(0-1 points)**
 
 ```{r}
+library(MASS)
 data("Boston") #download the Boston data
 dim(Boston) #dimensions
 str(Boston) #structure
@@ -186,9 +186,13 @@ boston_scaled_KS <- data.frame(boston_scaled_KS, crime) #add the new crime categ
 glimpse(boston_scaled_KS) #sanity-check that crime exist in the dataset
 ```
 
-**NOTE.** <span style="color: red;"> **EDITED CODE:** in the **Pre-exercise-code of Exercise 4.5**, straight AFTER the line that starts with  **boston_scaled <- read.table**  and ends with **sep=",", header = T)**, you should **ADD ONE LINE:**
+**NOTE.** 
 
-*boston_scaled$crime <- factor(boston_scaled$crime, levels = c("low", "med_low", "med_high", "high"))*</span>
+dollar sign is replaced with & due RMarkdown syntax
+
+<span style="color: red;"> **EDITED CODE:** in the Pre-exercise-code of Exercise 4.5, straight AFTER the line that starts with  boston_scaled <- read.table  and ends with sep=",", header = T), you should **ADD ONE LINE:**</span>
+
+<span style="color: black;">**boston_scaled&crime <- factor(boston_scaled&crime, levels = c("low", "med_low", "med_high", "high"))**</span>
 
 ```{r}
 # Divide dataset into test (20%) and train (80%)
@@ -238,7 +242,7 @@ Interpretention of the results are adapted from [Linear Discriminant Analysis in
   - In **zn** (proportion of residential land zoned for lots over 25,000 sq.ft.) all the other groups, expect **low crime** are getting **negative values**. Since the data is standardized, the positive values indicate that the values are greater than mean. Meaning that in areas with **low crime rate** the proportions of residential land zones are **bigger** in comparison to areas with higher crime rates.
   - In**medv** (median value of owner-occupied homes in $1000s.), only areas with **"high" crime rate** had negative values. This means that the areas with **high crime rate** have on average less owner-occupied homes (median value in 1000s dollars) than other areas.
 - **Coefficients of linear discriminants:** first discriminant function (LD1) has all 4 groups (low, mid_low, mid_high, high), second discriminant (LD2) has 3, and LD3 only 2. The coefficient indicate the linear combination of predictors that are used to form the LDA decision rule. For example
-  - $LD1: .12*zn + .11*indus - .06*chas - .16*nox -.13*rm + .25*age -.07*dis + 3.67*rad + .07*tax + .15*ptratio - .15*black + .24*lstat + .21*medv$
+  - <span style="color: black;">LD1: .12*zn + .11*indus - .06*chas - .16*nox -.13*rm + .25*age -.07*dis + 3.67*rad + .07*tax + .15*ptratio - .15*black + .24*lstat + .21*medv</span> 
   - To create the groups (4 clusters) **rad** (index of accessibility to radial highways) seems to have the most impact (**3.67**), followed by **age** (0.26), **lstat** (lower status of the population (percent), 0.24) and **medv** (median value of owner-occupied homes in $1000s, 0.21).
 - **Proportion of trace:** Percentage separations achieved by the first discriminant function (LD1 = 4 groups) is 95%, LD2 (3 groups) is 4% and LD3 (2groups) 1%
 
@@ -419,7 +423,7 @@ Therefore, maybe model with 2-3 clusters are the most optimal to describe the da
 
 ------------------------------------------------------
 
-### Bonus **(0-2 points)** to compensate any loss of points from the above exercises)
+### **Bonus:** to compensate any loss of points from the above exercises **(0-2 points)**
 
 - Perform k-means on the original Boston data with some reasonable number of clusters (> 2). 
 - Remember to standardize the dataset 
@@ -483,12 +487,27 @@ pairs(boston_bonus, col = bkm_3$cluster)
 
 Therefore, maybe model with 2 clusters is the most optimal to describe our data. But, since we need to have more than 2 clusters based on the guidelines: *Bonus: Perform k-means on the original Boston data with some reasonable number of clusters* **(> 2)**. We run the following model with 3 clusters.  
 
-Run LDA
-```{r}
-boston_bonus$crime_b <- as.numeric(boston_bonus$crime_b)
-lda.fit_b <- lda(bkm_3$cluster ~ ., data = boston_bonus) #LDA using the clusters as target classes
-lda.fit_b
-```
+**Run LDA**
+
+For some reason when I tried to knit the Assignment 4, this did not work anymore, but instead gave me an error code: <span style="color: red;"> Error in x - group.means[g, ] : non-conformable arrays </span>. Unsure, how to fix it. Below is a screenshot of the model, when it did work. 
+
+Here is the code in <span style="color: blue;">**blue**
+
+**NOTE.** The dollar sign has replaces with &, due to RMarkdown syntax
+
+<span style="color: blue;">boston_bonus <- data.frame(boston_bonus, crime_b) #add the new crime categorical variable </span>
+<span style="color: blue;">boston_bonus&crime_b <- factor(boston_bonus&crime_b, levels = c("low", "med_low", "med_high", "high"))</span>
+
+<span style="color: blue;">library(MASS) </span>
+
+<span style="color: blue;">boston_bonus&crime_b <- as.numeric(boston_bonus&crime_b)</span>
+
+<span style="color: blue;">lda.fit_b <- lda(bkm_3&cluster ~ ., data = boston_bonus) **#LDA using the clusters as target classes**</span>
+
+<span style="color: blue;">lda.fit_b </span>
+
+![Picture 1](Kuva12.png)
+
 
 **Interpretation of the results**
 
@@ -502,23 +521,31 @@ lda.fit_b
   - **Proportion of trace:** Percentage separations achieved by the first discriminant function (LD1 = 3 clusters) is 84% and LD2 (2 groups) 16%. 
 
 
-```{r}
-lda.arrows_b <- function(x, myscale = 1, arrow_heads = 0.1, color = "red", tex = 0.75, choices = c(1,2)){
-  heads <- coef(x)
-  arrows(x0 = 0, y0 = 0, 
-         x1 = myscale * heads[,choices[1]], 
-         y1 = myscale * heads[,choices[2]], col=color, length = arrow_heads)
-  text(myscale * heads[,choices], labels = row.names(heads), 
-       cex = tex, col=color, pos=3)
-}
 
-classes_b <- as.numeric(bkm_3$cluster) # target classes as numeric
+<span style="color: blue;"> lda.arrows_b <- function(x, myscale = 1, arrow_heads = 0.1, color = "red", tex = 0.75, choices = <span style="color: blue;">c(1,2)){</span>
 
-# plot the lda results
-plot(lda.fit_b, dimen = 2, col = classes_b, pch = classes_b)
-lda.arrows_b(lda.fit_b, myscale = 1)
+<span style="color: blue;">  heads <- coef(x)</span>
+<span style="color: blue;">  arrows(x0 = 0, y0 = 0, </span>
 
-```
+<span style="color: blue;">         x1 = myscale * heads[,choices[1]], </span>
+
+<span style="color: blue;">         y1 = myscale * heads[,choices[2]], col=color, length = arrow_heads)</span>
+
+<span style="color: blue;">  text(myscale * heads[,choices], labels = row.names(heads), </span>
+<span style="color: blue;">       cex = tex, col=color, pos=3)</span>
+
+<span style="color: blue;">}</span>
+
+<span style="color: blue;">classes_b <- as.numeric(bkm_3$cluster) # target classes as numeric</span>
+
+<span style="color: blue;"> # plot the lda results</span>
+<span style="color: blue;">plot(lda.fit_b, dimen = 2, col = classes_b, pch = classes_b)</span>
+
+<span style="color: blue;">lda.arrows_b(lda.fit_b, myscale = 1)</span>
+
+
+![Picture 2](Kuva13.png)
+
 
 **Interpretation of the plot**
 
@@ -526,7 +553,7 @@ lda.arrows_b(lda.fit_b, myscale = 1)
 
 ------------------------------------------------------
 
-### Super-Bonus: Plotly() 3D plot **(0-3 points)** (to compensate any loss of points from the above exercises)
+### **Super-Bonus:** Plotly() 3D plot **(0-3 points)** (to compensate any loss of points from the above exercises)
 
 - Run the code below for the (scaled) train data that you used to fit the LDA. The code creates a matrix product, which is a projection of the data points.
 - Install and access the **plotly** package. Create a 3D plot (cool!) of the columns of the matrix product using the code below.
@@ -588,7 +615,11 @@ boston_sb$crime_sb <- as.numeric(boston_sb$crime_sb)
 
 ```
 
-The last lines **matrix_product_sb <- as.matrix(model_predictors_sb) %*% lda.fit_sb$scaling** gives an **ERROR CODE** <span style="color: red;"> Error in as.matrix(model_predictors_sb) %*% lda.fit_sb$scaling : non-conformable arguments </span>
+The last lines **matrix_product_sb <- as.matrix(...)** gives an **ERROR CODE** 
+
+**NOTE.** The dollar sign has replaces with & and a star with extra %
+
+<span style="color: red;"> Error in as.matrix(model_predictors_sb) %%% lda.fit_sb&scaling : non-conformable arguments </span>
 
 Install and access **plotly** and draw 3D plot
 ```{r}
