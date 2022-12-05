@@ -1,0 +1,466 @@
+---
+title: "chapter5"
+author: "kiirasar"
+date: "2022-11-30"
+output: html_document
+---
+
+
+```{r}
+date()
+```
+
+
+
+# Assignment 5: Tasks and Instructions
+
+## 1. Data wrangling **(max 5 points)**
+
+See **create_human.R** and **human_final.csv** at [data folder](https://github.com/kiirasar/IODS-project/tree/master/data).
+
+
+## 2. Analysis **(max 15 points)**
+
+First we install/use R packages we need to complete the assignment.
+
+```{r}
+#install.packages('ggplot2')
+library(ggplot2)
+library(vtable)
+library(MASS)
+library(tidyr)
+library(dplyr)
+library(corrplot)
+library(GGally)
+library(plotly)
+library(tidyr)
+```
+
+### 1. Graphical overview and summaries of the data. Describe and interpret the  distributions and the relationships. **(0-3 points)**
+
+```{r}
+human_ch5<- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/Helsinki-Open-Data-Science/master/datasets/human2.txt", sep=",", header=T)
+View(human_ch5) #human chapter 5
+```
+
+```{r}
+st(human_ch5)
+```
+
+The human2 has 155 observations (rows, participants) and data has 8 variables (columns):
+
+- **Edu2.FM:** Ratio of female and male populations with secondary education
+- **Labo.FM:** Ratio of labor force participation of females and males
+- **Edu.Exp:** Expected Years of Education
+- **Life.Exp:** Life Expectancy at Birth
+- **GNI:** Gross National Income (GNI) per Capita
+- **Mat.Mor:** Maternal Mortality Ratio
+- **Ado.Birth:** Adolescent Birth Rate
+- **Parli.F:** Percent Representation in Parliament (of females I assume)
+
+```{r}
+gg = ggpairs(human_ch5, mapping = aes(), lower = list(combo = wrap("facethist", bins = 20)), upper = list(continuous = wrap("cor",  size=3)), title="Graphical overview of human_ch5 data")
+gg1 = gg + theme(axis.text = element_text(size=5), strip.text.x = element_text(size = 5), strip.text.y = element_text(size=5))
+gg1
+```
+
+**Distributions:** 
+
+- **Normally distributed**: Edu2.FM, Labo.FM, Edu.Exp, Parl.F. Labo.FM is a bit skewed on right and Parl.F a bit on left. Depending how the ratio (Labo.FM) has been defined there are either more males or females in labour force participation. Based on the common knowledge about gender difference in labour I assume there are more males. Simialrly, if the Parli.F is the ratio of females in parliment, there are less females than males in parliaments.  
+- **Exponential distribution**: GNI, Mat.Mor and Ado.Birth have more like exponential distributions.
+
+**Correlations:**  /
+Most correlations were positive and based on the scatterplots they seem to have linear relations (except some variables with exponential distributions)
+
+- **Highest correlation:** Higest correlation (-.857) was detected between **Live.Exp** and **Mat.Mor**. This means that the countries that have high life expectancy at birth have low maternal mortality ratio, and vice versa. This makes sense, since it could indicate the health care system status in each country. 
+- **Edu2.FM**: seem to have moderate **positive** correlation with Edu.Exp, Life.Exp and GNI, along with moderate **negative** with Mat.Mor and Ado.Birth. No correlation between Labo.FM and Parli.F. 
+- **Labor.FM:** has only small **positive** correlation between Mat.Mor and Parli.F
+- **Edu.Exp:** has moderate **positive** correlation with Life.Exp and GNI, and **weak** Parli.F, along with moderate **negative** correlation with Mat.Mor and Ado.Birth.
+- **Life.Exp:** has strong and weak **positive** correlation between GNI and Parli.F, respectively.As well as, strong **negative** correlation between Mat.Mor and Ado.Birth
+- **GNI:** moderate **negative** correlation with Mat.Mor and Ado.Birth
+- **Mat.Mor:** strong **positive** correlation with Ado.Birth
+
+Overall, Maternal mortality ratio and adolescent birth rate seem to most likely have negative associations to other variables. Meaning when mortality or adolescence birth rate is high it is associated with lower life expectancy, female ratio of 2nd education, a total of years in education (in country),  and GNI for each country, and vice versa. Similarly, GNI, Edu2.FM, Edu.Exp, Life.Exp are positively associated with each other. In countries where people live longer, spend more time in school, have higher/more event female/male 2nd education ratio have often high GNI. However, ratio of labor force between female and male, as well as the female representative in parliament does not seem to have that great impact on other variables. 
+
+### 2. Principal component analysis (PCA) on the raw (non-standardized) human data. **(0-2 points)**
+
+Show the variability captured by the principal components. Draw a **biplot** displaying the observations by the first two principal components (PC1 coordinate in x-axis, PC2 coordinate in y-axis), along with **arrows** representing the original variables.
+
+Interpret the results of both analysis (with and without standardizing). 
+
+- Are the results different? 
+- Why or why not? 
+- Include captions (brief descriptions) in your plots where you describe the results by using not just your variable names, but the actual phenomena they relate to.
+- Which number affects what?
+
+```{r}
+pca_human_ch5 <- prcomp(human_ch5) # perform principal component analysis, PCA (with the SVD method)
+summary(human_ch5)
+```
+
+This is the "raw" un-standardized data. You see that the range in values between the variables differ a lot (min-max), so it is very hard to draw any conclusions or interpreted the findings.
+
+```{r}
+s2 <- summary(pca_human_ch5)
+pca_pr2 <- round(100*s2$importance[2, ], digits =1) # rounded percentanges of variance captured by each PC
+print(pca_pr2) # print out the percentages of variance
+
+# create object pc_lab to be used as axis labels
+pc_lab2 = paste0(names(pca_pr2), " (", pca_pr2, "%)")
+pc_lab2
+
+biplot(pca_human_ch5, cex = c(0.8, 1), col = c("grey40", "deeppink2"), xlab = pc_lab2[1], ylab = pc_lab2[2])
+
+```
+
+### 3. Standardize human data and repeat the above analysis. **(0-4 points)**
+
+```{r}
+human_ch5_std <- scale(human_ch5) # standardize the data
+summary(human_ch5_std) # summaries
+```
+
+When the data is standardized (M=0, SD=1) the comparison between the variables becomes easier. You can still see that there is huge difference between the countries (max-min) in GNI and Maternal Mortality Ratio (Mat.Mor).
+
+```{r}
+pca_human_ch5_std <- prcomp(human_ch5_std)
+s3 <- summary(pca_human_ch5_std)
+pca_pr2_std <- round(100*s3$importance[2, ], digits =1) # rounded percentanges of variance captured by each PC
+print(pca_pr2_std) # print out the percentages of variance
+pc_lab2_std = paste0(names(pca_pr2_std), " (", pca_pr2_std, "%)")
+
+#PCA
+biplot(pca_human_ch5_std, cex = c(0.8, 1), col = c("grey40", "deeppink2"), xlab = pc_lab2_std[1], ylab = pc_lab2_std[2])
+```
+
+### 4. Interpretations of the first two principal component dimensions PCA standardized human data (biplot). **(0-2 points)**
+
+Interpret the results of both analysis (with and without standardizing). 
+
+- Include captions (brief descriptions) in your plots where you describe the results by using not just your variable names, but the actual phenomena they relate to.
+- Are the results different? 
+- Why or why not? 
+- Which number affects what?
+
+**Instructions based on the exercise:**
+
+A biplot is a way of visualizing the connections between two representations of the same data. First, a simple scatter plot is drawn where the observations are represented by two principal components (PC's). Then, arrows are drawn to visualize the connections between the original variables and the PC's. The following connections hold:
+
+- The angle between the arrows can be interpreted as the correlation between the variables.
+- The angle between a variable and a PC axis can be interpreted as the correlation between the two.
+- The length of the arrows are proportional to the standard deviations of the variables.
+
+**Other resources:**
+
+I also found another link [BioTuring](https://blog.bioturing.com/2018/06/18/how-to-read-pca-biplots-and-scree-plots/) which I found quite useful:
+
+- Bottom axis: PC1 score
+- Left axis: PC2 score
+- Top axis: loadings on PC1
+- Right axis: loadings on PC2
+
+
+- vectors that are close to each other are positively correlated
+- 90 degree = no correlation
+- 180 degree = negative correlation.
+
+**Biplot (unstandardized)** 
+
+Biplot is used to visualize associations between variables. The **country names** are located based on the two principal components (PC1 and PC2), the **arrows** indicate how the different variables (e.g., GNI, Life expectancy etc., are related to the components). 
+
+Since, the data is unstandardized the values (min-max) of the variables determine the connection. The **length of the arrow** indicates the standard deviations of the variable. Since, **GNI** had a range between 581 (Central African Republic) and 123124 (Qatar), which is far bigger than any other variable (hence biggest standard deviations), it overpowers the biplot. Country with highest GNI is **Qatar**, followed by Kuwait, and Singapore are closest to GNI (x-axis). Countries with lowest GNIs (Central African Republic, Congo, Malawi etc.,) are located furthest from GNI (x-axis). We need to use standardized data, so we can draw better conclusions of how these variables are associated to this phenomena. 
+
+**Biplot (unstandardized)** 
+
+When the data is standardized you can compare the variables better and those are spread around the biplot, unlike in unstandardized version where GNI was the only one, due to its large values and range between the countries. 
+
+Here you can see that there 3 different clusters (but 2 components) that are affecting our results: 
+
+- **Education:** entiles variables related to Edu.Exp, GNI, Edu2.FM, and Life.Exp (PC2) 
+- **Birth:** entiles Mat.Mor and Ado.Birth (PC2)
+- **Labour:** entiles Parli.F and Labo.FM (PC1)
+
+- Both **Education** and **Birth** components are part of the **PC2**, since they are close to PC2 origin (0). 
+- Education components (Edu.Exp, Edu2.FM, GNI and Life.Exp) are **positively correlated** with each other
+- Mat.Mor and Ado.Birth are **positively** correlated with each other
+-The two clusters (Education and Birth) are **negatively correlated** (180 degree angle)
+
+In other words, countries that have high education (in years, and female ratio), life expectancy and GNI, often have low maternal mortality and adolescents pregnancy rates. Countries with high Education-components and low Birth-components are presented left side. For example, Iceland and Norway (top left), Korea and Japan (mid-left), and Qatar and Iran (bottom-left). And vice versa on (right side).
+
+- Parli.F and Labo.FM are **positively correlated** with each other (close to each other)
+- Both are related to **PC1**, since they are located close to x-axis origin (0).
+- Countries that have high (or more even) rates of females in their parliaments and labor force are located on top (e.g., Rwanda, Mozambique, Iceland, Bolivia, Burundi etc.), and countries with low female rate at the bottom (e.g., Iran, Yemen, Egypt etc.)
+- Labor cluster **does not seem to correlate** with the other component (PC2: Education and birth), since there is 90 degrees between the variables (arrows).
+
+However, based on the arrow lengths there is high variability between the countries for each variable (longer the arrow, higher standard deviation).
+
+The proportion of variance in this model is explained 53.6% based on the PC1 (Labor) and 16.2% based on PC2 (Education and Birth)
+
+To summarize, countries with high Education, low Birth and high Labor components are located left top corner.
+
+### 5. Tea data **(0-4 points)**
+
+Tea data comes from the **FactoMineR** package and it is measured with a questionnaire on tea: 300 individuals were asked how they drink tea (18 questions) and what are their product's perception (12 questions). In addition, some personal details were asked (4 questions).
+
+Load the tea dataset and convert its character variables to factors:
+
+```{r}
+tea <- read.csv("https://raw.githubusercontent.com/KimmoVehkalahti/Helsinki-Open-Data-Science/master/datasets/tea.csv", stringsAsFactors = TRUE)
+```
+
+**Explore the data briefly:** 
+
+- look at the structure and 
+- the dimensions of the data. 
+- Use View(tea) to browse its contents, and 
+- visualize the data.
+
+```{r}
+View(tea)
+dim(tea) #300 observations, 36 variables
+str(tea) 
+```
+
+Tea data has 300 observations, 36 variables. Most seem to be factors with two levels ("dummy variables"), but there are some with 3, 4 and even 5-7 values. Age is the only numeric (integral) value.
+
+```{r}
+library(dplyr)
+library(tidyr)
+# column names to keep in the dataset
+tea_when <- c("breakfast", "tea.time", "evening", "lunch", "dinner", "always", "frequency")
+tea_where = c("where", "home", "work", "tearoom", "friends", "resto", "pub")
+tea_how = c("sugar", "Tea", "How", "how", "price")
+tea_who = c("age_Q", "sex", "SPC", "Sport")
+tea_why = c("escape.exoticism", "spirituality", "healthy", "diuretic", "friendliness", "iron.absorption", "feminine", "sophisticated", "slimming", "exciting", "relaxing", "effect.on.health")
+
+```
+
+```{r}
+# When
+tea_when <- select(tea, tea_when)
+
+cb_pal= c("#F0E442", "#E69F00",
+          "#0072B2", "#56B4E9",
+          "#F0E442", "#E69F00",
+          "#56B4E9", "#0072B2",
+          "#F0E442", "#E69F00",
+          "#56B4E9", "#0072B2",
+          "#F0E442", "#E69F00","#F0E442", "#E69F00")
+
+pivot_longer(tea_when, cols = everything()) %>% 
+  ggplot(aes(x=value, fill=value)) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8))+
+  coord_flip() +
+  geom_bar() +
+   scale_fill_manual(values = cb_pal) +
+  labs(title = "When people are drinking tea (dummy)", x="When?")
+
+```
+
+People tend to drink tea:
+
+- at least once a day (1/day or +2(day)
+- around than a half were drinking during breakfast, and had specific time when to drink tea
+- around one in thirst would also have tea in the evening and have alwayd drank tea.
+- most people avoided tea drinking during lunch or dinner.
+
+```{r}
+# Where
+tea_where <- select(tea, tea_where)
+
+cb_pal= c("#F0E442", "#E69F00","#F0E442",
+          "#56B4E9", "#0072B2",
+          "#E69F00", "#F0E442", 
+          "#0072B2", "#56B4E9", 
+          "#F0E442", "#E69F00",
+          "#0072B2", "#56B4E9",
+          "#E69F00", "#F0E442")
+
+pivot_longer(tea_where, cols = everything()) %>% 
+  ggplot(aes(x=value, fill=value)) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8))+
+  coord_flip() +
+  geom_bar() +
+   scale_fill_manual(values = cb_pal) +
+  labs(title = "Where people are drinking tea?", x="Where?")
+
+```
+
+- The most common places to drink tea were was at home
+- people often purchase their tea at chain store instead of from a specific tea store
+- approximately 25% drank tea a work
+- people rarely drank tea at tearooms, restaurants or pubs 
+- most people were drinking tea with friends
+
+
+```{r}
+# How
+tea_how <- select(tea, tea_how)
+
+cb_pal= c("#0072B2", "#56B4E9", 
+          "#F0E442", "#E69F00", "#F0E442",
+          "#0072B2", "#56B4E9", "#0072B2", "#56B4E9",
+          "#E69F00", "#F0E442", "#E69F00",
+          "#0072B2", "#56B4E9", "#0072B2", "#56B4E9","#0072B2", "#56B4E9")
+
+pivot_longer(tea_how, cols = everything()) %>% 
+  ggplot(aes(x=value, fill=value)) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8))+
+  coord_flip() +
+  geom_bar() +
+   scale_fill_manual(values = cb_pal) +
+  labs(title = "How people are drinking tea?", x="How?")
+
+```
+
+- approximately half had tea with sugar, other half without
+- most people were drinking early grey, then black and last green tea 
+- most people did not add any addings to their tea, some had milk (approx 60 people), lemon (approx 25 people) or other (approx 10 people) addings.
+- most used tea bags, almost 100 people used teabagd and unpacked tea, and less than 50 people used only unpacked tea products.
+- most people bought different types of tea, or used certain specific brands. People rarely bought cheap tea, or variaety they did not know. over 50 people bought upscaled tea (whatever that means)
+
+```{r}
+# Who
+tea_who <- select(tea, tea_who)
+
+cb_pal= c("#F0E442", "#E69F00","#F0E442", "#E69F00","#F0E442",
+          "#56B4E9", "#0072B2",
+          "#F0E442", "#E69F00", "#F0E442", "#E69F00","#F0E442", "#E69F00", "#F0E442",
+          "#0072B2", "#56B4E9")
+
+pivot_longer(tea_who, cols = everything()) %>% 
+  ggplot(aes(x=value, fill=value)) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8))+
+  coord_flip() +
+  geom_bar() +
+   scale_fill_manual(values = cb_pal) +
+  labs(title = "Who are are drinking tea?", x="Who?")
+
+```
+
+most common people who drank tea (or at least answered this survey) were:
+
+- females
+- 15-24 or 25-34 years old
+- students, non-workers or employees
+- considered themselves "sportman"
+
+```{r}
+# Why
+tea_why <- select(tea, tea_why)
+
+cb_pal= c("#F0E442", "#E69F00",
+          "#0072B2", "#56B4E9",
+          "#F0E442", "#E69F00",
+          "#56B4E9", "#0072B2",
+          "#F0E442", "#E69F00",
+          "#56B4E9", "#0072B2",
+          "#F0E442", "#E69F00",
+          "#0072B2", "#56B4E9",
+          "#E69F00", "#F0E442",
+          "#56B4E9", "#0072B2",
+          "#E69F00", "#F0E442", 
+          "#56B4E9", "#0072B2")
+
+pivot_longer(tea_why, cols = everything()) %>% 
+  ggplot(aes(x=value, fill=value)) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8))+
+  coord_flip() +
+  geom_bar() +
+   scale_fill_manual(values = cb_pal) +
+  labs(title = "Why people are drinking tea (dummy)?", x="Why?")
+
+```
+
+people drank tea because:
+
+- Majority of people drank tea because they wanted to relax, tea is a diuretic and healthy product, or social reasons and because they think it is sophisticated manner. 
+- rarely people drank due to its health effects, excitement, slimming purposes, absorption iron, or spiritual reasons
+- 50-50 though drinking tea was feminine or they wanted to escape exoticism (what ever that means).
+
+
+### Instructions
+- Use Multiple Correspondence Analysis (MCA) on the tea data (or on just certain columns of the data, it is up to you!). 
+- Interpret the results of the MCA and 
+- draw at least the variable **biplot** of the analysis. 
+- You can also explore other plotting options for MCA. 
+- Comment on the output of the plots.
+- Look at the summary of the model.
+- Plot the variables of the model. You can either plot the variables or the individuals or both. You can change which one to plot with the `invisible` argument.
+
+
+```{r}
+#install.packages("FactoMineR")
+library(FactoMineR)
+
+#mca_tea <- MCA(tea, graph = FALSE) # multiple correspondence analysis
+mca_when <- MCA(tea_when, graph = FALSE) # multiple correspondence analysis
+mca_where <- MCA(tea_where, graph = FALSE)
+mca_how <- MCA(tea_how, graph = FALSE)
+mca_who <- MCA(tea_who, graph = FALSE)
+mca_why <- MCA(tea_why, graph = FALSE)
+
+# summary of the model
+summary(mca_when)
+```
+
+Tips how to read this summary and the plot below can be found [here](http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/114-mca-multiple-correspondence-analysis-in-r-essentials/) and [here](https://www.displayr.com/interpret-correspondence-analysis-plots-probably-isnt-way-think/)
+
+**Explained variance**
+
+- More variance is explained the dewer insight is missing
+- The first dimension explains the variance of when people are drinking tea 19%. teh second 16% and so on. The last dimension (9) only explains 5% of the variance. 
+- The dimension 1 (19%) and 2 (16%) already explains 35% of the total variance. **NOTE.** Not all variables will fit this interpretation of two-dimensionality.
+- All in all, when people are drinking tea is not alone good-enough to explain the differences in peoples tea habits. 
+**cos2 cateogries**
+
+- When the sum of **cos2** is close to one, the variables are well presented. 
+- For example, in this summary both breakfast can be explained by 2 dimensions (approx. cos2 in Dim2 is .300), 
+- but dinner is mostly explained by the first dimension (cos2 is .330, when for dim2 and dim3 is zero).
+- cos2 individuals would go through how these are representing each participant who took a part in this survey.
+
+**Eta2**
+
+- is often used to describe the effect size, unsure if that is the case here too. simplified version of explaining eta is to try ro rhink that it is a proportion of total variance explained in specific variable when it is part of certain group. For exampe, dinner is mainly associated with dimension1. 
+
+```{r}
+# visualize MCA
+plot(mca_when, invisible=c("ind"), graph.type = "classic", habillage = "quali")
+```
+
+- The variables categories with similar profiles are grouped together. 
+- The further the labels are from the origin he more discriminating they are
+- Negatively correlated variables are opposite sides of the plot origin.
+- The distance between category points and the origin measures the quality of the variable category on the factor map. Category points that are away from the origin are well represented on the factor map.
+
+For example,
+
+- people who have tea more than twice a day, often would drink the during lunch and evening, and have specific teatimes (top-left).
+- People who drank only once a day, would most likely to drink in the evening (bottom-right), and they have not always drank tea.
+- there is also people who only have tea at breakfast (bottom-left)
+- and people who are occasional tea-drinkers (top-right)
+
+Also, 
+
+- drinking tea once a day or 1 to 2 times a week are the most discriminating factors (furthest from the origin).
+- usually the opposites are negatively correlated, which makes sense in dummy variables (opposite sites of the origin, eg., breakfast and no.breakfast)
+- not dinner is not very good discriminat variable (most people dont drink tea during dinner). Unlike, people who drink tea during dinner, seem to be very distinct group from the rest (away from the origin).
+
+
+```{r}
+summary(mca_where)
+summary(mca_how)
+summary(mca_who)
+summary(mca_why)
+```
+
+```{r}
+# visualize MCA
+plot(mca_where, invisible=c("ind"), graph.type = "classic", habillage = "quali")
+plot(mca_how, invisible=c("ind"), graph.type = "classic", habillage = "quali")
+plot(mca_who, invisible=c("ind"), graph.type = "classic", habillage = "quali")
+plot(mca_why, invisible=c("ind"), graph.type = "classic", habillage = "quali")
+```
+
+
+
