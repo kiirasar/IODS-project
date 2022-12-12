@@ -8,7 +8,6 @@ library(readr)
 
 #BPRS2
 BPRS2 <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/MABS/master/Examples/data/BPRS.txt", sep =" ", header = T)
-
 colnames(BPRS2) #columnnames of BPRS: treatment, subject and week0 to week8
 str(BPRS2) #structure of BPRS: 40 observations (participants) and 11 variables, all integrals (numeric)
 library(vtable)
@@ -68,3 +67,4 @@ glimpse(RATSL2)
 #For example, each subject (ID) has several rows: 1, 17, 33, 49, 65, 81, 97, 113, 129, 145, 161
 
 #Overall, wide format dos not repeat values, but each row is often individual subject/observation.
+
