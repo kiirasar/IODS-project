@@ -5,10 +5,12 @@ date: "2022-11-23"
 output: html_document
 ---
 
+
 ```{r}
 date()
 ```
 
+------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Assignment 4: Tasks and Instructions
 
@@ -628,13 +630,13 @@ plot_ly(x = matrix_product_sb$LD1, y = matrix_product_sb$LD2, z = matrix_product
 
 Unsure, why it is not working. Any suggestions?
 
-
+------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## 2. Data wrangling  **(max 5 points)**
 This code is for the next week’s data! 
 
 See [create_human.R](https://github.com/kiirasar/IODS-project/tree/master/data) and **human.csv**
 
-
+------------------------------------------------------------------------------------------------------------------------------------------------
 
 End of assignment 4

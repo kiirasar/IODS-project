@@ -1,0 +1,27 @@
+---
+title: "updates"
+author: "kiirasar"
+date: "2022-12-13"
+output: html_document
+---
+
+```{r}
+sessionInfo()
+install.packages("installr")
+library(installr)
+updateR()
+
+devtools::install_github("rstudio/rmarkdown")
+install.packages("xfun")
+update.packages("xfun")
+
+install.packages("rlang")
+update.packages("rlang")
+library(rlang)
+update.packages("vctrs")
+
+install.packages("rmarkdown")
+library(rmarkdown)
+update.packages("rmarkdown")
+
+```

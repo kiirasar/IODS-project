@@ -10,6 +10,8 @@ output: html_document
 date()
 ```
 
+------------------------------------------------------------------------------------------------------------------------------------------------
+
 # Assignment 6: Tasks and Instructions
 
 ## Data wrangling **(max 5 points)**
@@ -28,6 +30,8 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 ```
+
+------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## RATS data and Chapter8 **(0-7 points)**
 
@@ -243,7 +247,7 @@ There are statistically **significant (p<.05)** difference between
 
 Since the p-values for the current comparisons are so low, even multiplying them with number of comparison (n=3), they stay statistically significant.
 
-** Fit the linear model** 
+**Fit the linear model** 
 
 ```{r}
 library(dplyr); library(tidyr)
@@ -261,7 +265,7 @@ Both **group** and **baseline** are significant in this model (p<.001). Meaning 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------
 
-## BPRS data
+## BPRS data and Chapter 9 **(0-8 points)**
 
 Implement the analyses of **Chapter 9 of MABS** using the **BPRS** data. **(0-8 points)**
 
